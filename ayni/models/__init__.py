@@ -28,7 +28,6 @@ class _EntityBase(object):
                     if not k.startswith('_'))
 
 
-
 Session = scoped_session(sessionmaker())
 metadata = MetaData()
 Base = declarative_base(cls=_EntityBase)
@@ -93,3 +92,4 @@ def flush():
     Session.flush()
 
 from projects import Project  # noqa
+from docs import Doc  # noqa
