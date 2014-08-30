@@ -7,7 +7,7 @@ class Doc(Base):
     __tablename__ = 'docs'
     id = Column(Integer, primary_key=True)
     version = Column(String(256), nullable=False, unique=True, index=True)
-    project_id = Column(Integer, ForeignKey('project.id'))
+    project_id = Column(Integer, ForeignKey('projects.id'))
     url_prefix = Column(String(256))
     fqdn = Column(String(256))
 
