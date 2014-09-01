@@ -45,7 +45,7 @@ class TestDocController(object):
 
         result = session.app.get('/projects/foobar/docs/stable/')
         assert result.status_int == 200
-        assert result.json['fqdn'] == 'example.com'
+        assert result.json['fqdn'] == 'http://example.com'
         assert result.json['version'] == 'stable'
         assert result.json['url_prefix'] == '/docs/stable/'
 
@@ -56,3 +56,21 @@ class TestDocController(object):
 
         result = session.app.get('/projects/foobar/docs/stable/', expect_errors=True)
         assert result.status_int == 404
+
+    def test_get_full_url(self, session):
+        p = Project('foobar', 'example.com')
+        Doc(p, 'stable', '/docs/')
+        session.commit()
+
+        result = session.app.get('/projects/foobar/docs/stable/')
+        assert result.status_int == 200
+        assert result.json['full_url'] == 'http://example.com/docs/stable/'
+
+    def test_get_end_url(self, session):
+        p = Project('foobar', 'example.com')
+        Doc(p, 'stable', '/docs/')
+        session.commit()
+
+        result = session.app.get('/projects/foobar/docs/stable/')
+        assert result.status_int == 200
+        assert result.json['end_url'] == '/docs/stable/'
