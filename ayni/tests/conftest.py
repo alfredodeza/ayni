@@ -34,7 +34,7 @@ def app(request):
     }
 
     # Set up a fake app
-    app = load_test_app(config)
+    app = TestApp(load_test_app(config))
     return app
 
 
@@ -71,6 +71,9 @@ def connection(app, request):
         _db.Base.metadata.drop_all(db_engine)
 
     request.addfinalizer(teardown)
+
+    # Slap our test app on it
+    _db.app = app
     return _db
 
 
@@ -114,3 +117,54 @@ def session(connection, request):
 
     request.addfinalizer(teardown)
     return connection
+
+
+class TestApp(object):
+    """
+    A controller test starts a database transaction and creates a fake
+    WSGI app.
+    """
+
+    __headers__ = {}
+
+    def __init__(self, app):
+        self.app = app
+
+    def _do_request(self, url, method='GET', **kwargs):
+        methods = {
+            'GET': self.app.get,
+            'POST': self.app.post,
+            'PUT': self.app.put,
+            'DELETE': self.app.delete
+        }
+        kwargs.setdefault('headers', {}).update(self.__headers__)
+        return methods.get(method, self.app.get)(str(url), **kwargs)
+
+    def post(self, url, **kwargs):
+        """
+        @param (string) url - The URL to emulate a POST request to
+        @returns (paste.fixture.TestResponse)
+        """
+        return self._do_request(url, 'POST', **kwargs)
+
+    def get(self, url, **kwargs):
+        """
+        @param (string) url - The URL to emulate a GET request to
+        @returns (paste.fixture.TestResponse)
+        """
+        return self._do_request(url, 'GET', **kwargs)
+
+    def put(self, url, **kwargs):
+        """
+        @param (string) url - The URL to emulate a PUT request to
+        @returns (paste.fixture.TestResponse)
+        """
+        return self._do_request(url, 'PUT', **kwargs)
+
+    def delete(self, url, **kwargs):
+        """
+        @param (string) url - The URL to emulate a DELETE request to
+        @returns (paste.fixture.TestResponse)
+        """
+        return self._do_request(url, 'DELETE', **kwargs)
+
