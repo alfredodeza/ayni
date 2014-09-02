@@ -1,5 +1,5 @@
 import os
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from ayni.models import Base
 from ayni.util import normalize_fqdn
 
@@ -8,16 +8,28 @@ class Doc(Base):
 
     __tablename__ = 'docs'
     id = Column(Integer, primary_key=True)
-    version = Column(String(256), nullable=False, unique=True, index=True)
+    name = Column(String(256), nullable=False, index=True)
+    version = Column(String(256), nullable=False, index=True)
     project_id = Column(Integer, ForeignKey('projects.id'))
+    redirect = Column(Boolean(), nullable=False, default=False)
+    redirect_to = Column(String(256))
     url_prefix = Column(String(256))
+    prefix_regex = Column(String(256))
     fqdn = Column(String(256))
+    weight = Column(Integer)
 
-    def __init__(self, project, version, url_prefix, fqdn=None):
+    def __init__(self, project, name, version, url_prefix,
+            redirect_to=None, fqdn=None,
+            redirect=False, prefix_regex=None, weight=1):
         self.project = project
+        self.name = name
         self.version = version
         self.url_prefix = url_prefix
+        self.prefix_regex = prefix_regex
         self.fqdn = normalize_fqdn(fqdn) or project.fqdn
+        self.redirect_to = redirect_to or self.full_url
+        self.redirect = redirect
+        self.weight = weight
 
     @property
     def full_url(self):
@@ -37,5 +49,6 @@ class Doc(Base):
             url_prefix=self.url_prefix,
             fqdn=self.fqdn,
             end_url=self.end_url,
-            full_url=self.full_url
+            full_url=self.full_url,
+            redirect_to=self.redirect_to,
         )
