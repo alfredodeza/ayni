@@ -4,14 +4,14 @@ from ayni.models import projects
 
 class DocController(object):
 
-    def __init__(self, version):
-        self.version = version
+    def __init__(self, name):
+        self.name = name
         project_id = request.context['project_id']
         self.project = projects.Project.get(project_id)
 
     @expose('json')
     def index(self):
-        doc = self.project.get_doc(self.version)
+        doc = self.project.get_doc(self.name)
         if not doc:
             abort(404)
         return doc
@@ -26,8 +26,8 @@ class DocsController(object):
         return project.docs
 
     @expose('json')
-    def _lookup(self, version, *remainder):
-        return DocController(version), remainder
+    def _lookup(self, name, *remainder):
+        return DocController(name), remainder
 
 
 class ProjectController(object):
