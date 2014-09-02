@@ -16,7 +16,7 @@ class TestProjectsController(object):
         json = result.json['projects']
         assert result.status_int == 200
         assert len(json) == 1
-        assert json[0]['fqdn'] == 'example.com'
+        assert json[0]['fqdn'] == 'http://example.com'
         assert json[0]['name'] == 'foobar'
 
     def test_list_a_couple_of_projects(self, session):
