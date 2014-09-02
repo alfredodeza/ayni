@@ -69,3 +69,62 @@ sqlalchemy = {
     'pool_recycle':  3600,
     'encoding':      'utf-8'
 }
+
+projects = [
+    {
+        'name': 'ceph',
+        'fqdn': 'ceph.com',
+        'docs': [
+            {
+                'name': 'latest',
+                'version': 'v0.80.5',
+                'url_prefix': '/docs/',
+                'prefix_regex': '~/docs/(.*)',
+                'weight': 99,
+                'redirect': True,
+            },
+            {
+                'name': 'firefly',
+                'version': 'v0.80.5',
+                'url_prefix': '/docs/',
+                'prefix_regex': '~/docs/firefly$',
+                'redirect': True,
+            },
+            {
+                'name': 'dumpling',
+                'version': 'v0.67.9',
+                'url_prefix': '/docs/',
+                'prefix_regex': '~/docs/dumpling$',
+                'redirect': True,
+            },
+            {
+                'name': 'development',
+                'version': 'master',
+                'url_prefix': '/docs/',
+                'redirect': False,
+            },
+
+        ]
+    },
+    {
+        'name': 'ceph-deploy',
+        'fqdn': 'ceph.com',
+        'docs': [
+            {
+                'name': 'latest',
+                'version': 'v1.5.12',
+                'url_prefix': '/ceph-deploy/docs/',
+                'prefix_regex': '~/ceph-deploy/docs/(.*)',
+                'weight': 99,
+                'redirect': True,
+            },
+            {
+                'name': 'development',
+                'version': 'master',
+                'url_prefix': '/ceph-deploy/docs/',
+                'redirect': False,
+            },
+
+        ]
+    },
+]
