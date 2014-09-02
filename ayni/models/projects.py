@@ -26,3 +26,11 @@ class Project(Base):
         for d in self.docs:
             if d.name == name:
                 return d
+
+    def __json__(self):
+        return dict(
+            name=self.name,
+            fqdn=self.fqdn,
+            docs=self.docs,
+        )
+

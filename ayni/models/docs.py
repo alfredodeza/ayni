@@ -45,10 +45,10 @@ class Doc(Base):
 
     def __json__(self):
         return dict(
+            name=self.name,
+            prefix_regex=self.prefix_regex,
             version=self.version,
             url_prefix=self.url_prefix,
-            fqdn=self.fqdn,
             end_url=self.end_url,
-            full_url=self.full_url,
             redirect_to=self.redirect_to,
         )
