@@ -19,7 +19,7 @@ setup(
     test_suite='ayni',
     zip_safe=False,
     include_package_data=True,
-    packages=find_packages(exclude=['ez_setup'])
+    packages=find_packages(exclude=['ez_setup']),
     classifiers = [
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
@@ -30,5 +30,11 @@ setup(
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.3',
-    ]
+    ],
+    entry_points="""
+        [pecan.command]
+        generate=ayni.commands.generate:GenerateMapCommand
+        populate=ayni.commands.populate:PopulateCommand
+        """
+
 )
