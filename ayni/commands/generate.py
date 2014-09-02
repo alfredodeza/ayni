@@ -1,4 +1,3 @@
-import os
 from pecan.commands.base import BaseCommand
 from pecan import conf
 
@@ -33,37 +32,28 @@ class GenerateMapCommand(BaseCommand):
         try:
             out("STARTING A TRANSACTION...")
             models.start()
-            models.Project('ceph', 'ceph.com'),
-            models.Project('ceph-deploy', 'ceph.com'),
-            models.Project('calamari', 'ceph.com'),
-            models.commit()
 
-            ceph = models.Project.get(1)
-            cephdeploy = models.Project.get(2)
-            calamari = models.Project.get(3)
-
-            models.Doc(ceph, 'catchall', 'v0.80.5', '/docs/', prefix_regex=r'~/docs/(.*)', weight=99, redirect=True)
-            models.Doc(ceph, 'firefly', 'v0.80.5', '/docs/', prefix_regex=r'~/docs/firefly$', weight=2, redirect=True)
-            models.Doc(ceph, 'dumpling', 'v0.67.9', '/docs/', prefix_regex=r'~/docs/dumpling$', weight=2, redirect=True)
-            models.Doc(ceph, 'stable', 'v0.80.5', '/docs/', prefix_regex=r'~/docs/(latest|stable)$', redirect=True)
-            models.Doc(ceph, 'development', 'master', '/docs/', prefix_regex=r'~/docs/(dev|devel|development)$', redirect=True)
-            models.Doc(cephdeploy, 'stable', 'latest', '~/ceph-deploy/docs', prefix_regex=r'~/docs/ceph-deploy($|\/$)', redirect=True)
-            models.Doc(cephdeploy, 'development', 'master', '~/docs/ceph-deploy/', redirect=False)
-
-            models.commit()
             template = map_template.format(timestamp=timestamp())
-            for project in models.Project.query.all():
-                template = template + '\n# redirects for %s\n' % project.name
-                for doc in project.docs:
-                    if doc.redirect:
+            for project in conf.projects:
+                p = models.Project.query.filter_by(name=project['name']).first()
+                if not p:
+                    p = models.Project(name=project['name'], fqdn=project['fqdn'])
+                template = template + '\n# redirects for %s\n' % p.name
+                for doc in project.get('docs', []):
+                    d = p.get_doc(doc['name'])
+                    if not d:
+                        d = models.Doc(p, **doc)
+
+                    if doc.get('redirect'):
                         line = "{prefix} {redirect};\n".format(
-                            prefix=doc.prefix_regex or doc.url_prefix, redirect=doc.redirect_to
+                            prefix=d.prefix_regex or d.url_prefix, redirect=d.redirect_to
                         )
                         template = template + line
-            #here = os.path.abspath(os.path.dirname(__file__))
+
+            models.commit()
+
             with open(conf.get('map_path', 'ayni.map'), 'w') as f:
                 f.write(template)
-
 
         except:
             models.rollback()
