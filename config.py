@@ -1,4 +1,5 @@
 from pecan.hooks import TransactionHook, RequestViewerHook
+from ayni.hooks.cors import CorsHook()
 from ayni import models
 
 
@@ -22,6 +23,7 @@ app = {
             models.rollback,
             models.clear
         ),
+        CorsHook(),
     ],
     'debug': True,
     #'errors': {
