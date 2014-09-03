@@ -3,31 +3,63 @@
         if (document.readyState == "complete") onReady();
     }, 30);
 
+    function createUL(items){
+      return "<ul>" + items.join('\n') + "</ul>";
+
+    };
+
+    function createLI(items){
+      var li_items = [];
+      for (var i = 0; i < items.length; i++) {
+        var item = "<li>";
+        item += items[i];
+        item += "</li>";
+        li_items.push(item);
+      };
+      return li_items
+
+    };
+
+    function createA(href, title){
+      var link = '<a href="';
+      link += href
+      link += '">';
+      link += title;
+      link += '</a>';
+      return link
+    }
+
     function createDiv(_class, _id, contentArray){
-          var div = document.createElement("div");
-          if (_class) {
-            div.className = _class;
-          }
+      if ((_class) && (!_id)) {
+        var div = '<div class="';
+        div +=  _class;
+        div +=  '">';
+      } else if ((!_class) && (_id)) {
+        var div = '<div id="' + _id + '">';
+      } else if ((_class) && (_id)) {
+        var div = '<div id="' + _id + '" class="' + _class + '">';
+      };
 
-          if (_id) {
-            div.id = _id
-          }
+      for (var i = 0; i < contentArray.length; i++) {
+        div += contentArray[i];
+      };
 
-          for (var i = 0; i < contentArray.length; i++) {
-            div.appendChild(contentArray[i]);
-          }
-          return div;
+      div += '</div>';
+      return div;
     };
 
     function InsertHtml(links){
-          var footer = document.createElement("div");
-          footer.className = "ayni-footer";
+      var li_links = createLI(links);
+      var ul_links = createUL(li_links);
+      var version_links = createDiv("ayni-versions", null, [ul_links]);
+      var current_version = '<span>Doc version: stelkjhasdflkjhsadf</span>';
+      var footer = createDiv("ayni-footer", null, [version_links, current_version]);
+      var container = createDiv("ayni-container", null, [footer]);
 
-          links = createDiv("ayni-versions", null, links);
-          footer.appendChild(links);
-
-          document.body.appendChild(footer);
-
+      // HATE HATE HATE HATE HATE HATE HATE HATE HATE HATE HATE HATE HATE HATE
+      // I usually tell people not to hate, but I HATE THIS THING.
+      // HATE HATE HATE HATE HATE HATE HATE HATE HATE HATE HATE HATE HATE HATE
+      document.body.innerHTML += container;
     };
 
     function onReady(){
@@ -35,14 +67,15 @@
         // Inject the css
         var link = document.createElement("link");
         // FIXME: this needs to be configurable
-        link.href = "http://ayni.ceph.com/public/css/ayni.css";
+        //link.href = "http://ayni.ceph.com/public/css/ayni.css";
+        link.href = "ayni.css";
         link.type = "text/css";
         link.rel = "stylesheet";
         document.getElementsByTagName("head")[0].appendChild(link);
 
         var request = new XMLHttpRequest();
         // FIXME: this needs to be configurable
-        request.open('GET', 'http://ayni.ceph.com/projects/ceph-deploy/', true);
+        request.open('GET', 'http://ayni.ceph.com/projects/ceph/', true);
 
         request.onload = function() {
             if (request.status >= 200 && request.status < 400){
@@ -55,14 +88,11 @@
                     var obj = data[i];
                     var redirect_to = obj['redirect_to'];
                     var name = obj['name'];
-                    var link = document.createElement('a')
-                    link.setAttribute('href', redirect_to);
-                    link.setAttribute('title', name);
+                    var link = createA(redirect_to, name);
                     links.push(link);
                 }
 
                 InsertHtml(links);
-
             }
         };
 
