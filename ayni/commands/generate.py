@@ -2,7 +2,10 @@ from pecan.commands.base import BaseCommand
 from pecan import conf
 
 from ayni import models
+from ayni import templates
 from datetime import datetime
+import os
+from string import Template
 
 map_template = """# this is a generated file from an Ayni app - do not edit directly.
 # file was last generated on {timestamp}
@@ -49,6 +52,22 @@ class GenerateMapCommand(BaseCommand):
                             prefix=d.prefix_regex or d.url_prefix, redirect=d.redirect_to
                         )
                         template = template + line
+
+                # Create the JS
+                here = os.path.abspath(os.path.dirname(__file__))
+                top_path = os.path.abspath(os.path.dirname(os.path.dirname(here)))
+                public_path = os.path.join(top_path, 'public')
+                js_path = os.path.join(public_path, 'js')
+                project_js = os.path.join(js_path, "%s.js" % project['name'])
+                with open(project_js, 'w') as js_file:
+                    project_url_part = "/projects/%s/" % project['name']
+                    project_url = "%s%s" % (conf.ayni_fqdn.strip('/'), project_url_part)
+                    t = Template(templates.js)
+                    contents = t.substitute({
+                        'ayni_css_file': conf.ayni_css_file,
+                        'project_url': project_url,
+                        })
+                    js_file.write(contents)
 
             models.commit()
 
