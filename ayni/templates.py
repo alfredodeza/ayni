@@ -6,7 +6,7 @@ js = """
     }, 30);
 
     function createUL(items){
-      return "<ul>" + items.join('\n') + "</ul>";
+      return "<ul>" + items.join('') + "</ul>";
 
     };
 
