@@ -10,10 +10,15 @@ js = """
 
     };
 
-    function createLI(items){
+    function createLI(items, _class){
       var li_items = [];
       for (var i = 0; i < items.length; i++) {
-        var item = "<li>";
+        if (_class) {
+          var item = '<li class="'+_class+'">';
+        } else {
+            var item = "<li>";
+        }
+
         item += items[i];
         item += "</li>";
         li_items.push(item);
@@ -64,12 +69,12 @@ js = """
     }
 
     function InsertHtml(links, doc_version){
-      var li_links = createLI(links);
+      var li_links = createLI(links, "ayni-versions");
+      var current_version = '<li id="ayni-version-anchor"><span>Doc version: '+doc_version+'</span></li>';
+      li_links.push(current_version);
       var ul_links = createUL(li_links);
-      var version_links = createDiv("ayni-versions", null, [ul_links]);
-      var current_version = '<span>Doc version: '+doc_version+'</span>';
-      var footer = createDiv("ayni-footer", null, [version_links, current_version]);
-      var container = createDiv("ayni-container", null, [footer]);
+      var version_links = createDiv("ayni-footer", null, [ ul_links]);
+      var container = createDiv("ayni-container", null, [version_links]);
 
       // HATE HATE HATE HATE HATE HATE HATE HATE HATE HATE HATE HATE HATE HATE
       // I usually tell people not to hate, but I HATE THIS THING.
