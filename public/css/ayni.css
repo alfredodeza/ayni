@@ -4,15 +4,15 @@
     padding: 0px;
     margin: 0px;
     bottom: 5px;
-    left: 5px;
+    right: 5px;
 }
 
 
 .ayni-versions {
     display: none;
     list-style-type: none;
-    float: right;
-    margin: 0px 0px 0px 17px;
+    float: left;
+    margin: 0px 15px 0px 0px;
     padding: 5px 5px 5px 5px;
     background-color: #5E6A71;
     border: 2px solid #E6E8E8;
