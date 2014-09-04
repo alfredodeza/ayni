@@ -1,6 +1,6 @@
 .ayni-container
 {
-   position:absolute;
+   position:fixed;
    bottom:0;
    width:50%;
    height:10px;   /* Height of the footer */
