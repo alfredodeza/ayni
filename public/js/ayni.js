@@ -52,7 +52,7 @@
       var li_links = createLI(links);
       var ul_links = createUL(li_links);
       var version_links = createDiv("ayni-versions", null, [ul_links]);
-      var current_version = '<span>Doc version: stelkjhasdflkjhsadf</span>';
+      var current_version = '<span>Doc version: stable</span>';
       var footer = createDiv("ayni-footer", null, [version_links, current_version]);
       var container = createDiv("ayni-container", null, [footer]);
 
@@ -66,16 +66,13 @@
         clearInterval(ready);
         // Inject the css
         var link = document.createElement("link");
-        // FIXME: this needs to be configurable
-        //link.href = "http://ayni.ceph.com/public/css/ayni.css";
-        link.href = "ayni.css";
+        link.href = "$ayni_css_file";
         link.type = "text/css";
         link.rel = "stylesheet";
         document.getElementsByTagName("head")[0].appendChild(link);
 
         var request = new XMLHttpRequest();
-        // FIXME: this needs to be configurable
-        request.open('GET', 'http://ayni.ceph.com/projects/ceph/', true);
+        request.open('GET', '$project_url', true);
 
         request.onload = function() {
             if (request.status >= 200 && request.status < 400){
