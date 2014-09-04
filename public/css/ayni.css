@@ -1,78 +1,42 @@
-.ayni-container
-{
-   position:fixed;
-   bottom:0;
-   width:50%;
-   height:10px;   /* Height of the footer */
-   padding: 5px 0px 50px 15px;
-}
-
-.ayni-footer
-{
-    float: left;
-    width:60%;
-    margin: 0 1%;
-
-}
-
-.ayni-footer span {
-    display: inline-block;
-    color: #E6E8E8;
-    background-color: #5E6A71;
-    opacity:0.9;
-
-    padding: 5px 5px 5px 5px;
-}
-
-.ayni-versions
-{
-    float: left;
-    width: 30%;
-    margin-left: 50%;
-
-    position: relative;
-    width:200px;
-    height: 5px;
-    right:0;top:0;
-    opacity: 0;
-    display: inline-block;
-    padding: 5px 5px 5px 15px;
-    -webkit-transition: opacity 0.2s ease-in;
-    -moz-transition: opacity 0.2s ease-in;
-    -o-transition: opacity 0.2s ease-in;
-    transition: opacity 0.2s ease-in;
-    opacity: 0;*/
-}
-
-.ayni-versions ul {
-    width: 100%;
+.ayni-container {
+    position: fixed;
     display: block;
-    white-space: nowrap;
-    margin-left: -15%;
+    padding: 0px;
+    margin: 0px;
+    bottom: 5px;
+    left: 5px;
 }
 
-.ayni-versions li {
-    width: 50%;
-    display: inline;
-    padding-left: 10px;
 
+.ayni-versions {
+    display: none;
+    list-style-type: none;
+    float: right;
+    margin: 0px 0px 0px 17px;
+    padding: 5px 5px 5px 5px;
+    background-color: #5E6A71;
+    border: 2px solid #E6E8E8;
+    color: #E6E8E8;
+    text-decoration: underline;
+    border-radius: 3px;
 }
 
-.ayni-versions li a{
+.ayni-versions a {
+    text-decoration: none;
+    color: #E6E8E8;
+}
+
+#ayni-version-anchor {
+    list-style-type: none;
+    padding: 5px 5px 5px 5px;
     color: #E6E8E8;
     background-color: #5E6A71;
-    text-decoration: none;
-    padding: 5px 5px 5px 5px;
-
+    border: 2px solid #E6E8E8;
+    border-radius: 3px;
 }
 
-
-.ayni-footer:hover .ayni-versions{
+.ayni-container:hover li{
     opacity: 1;
+    display: inline-block;
     list-style-type: none;
-    -webkit-transition: all 0.2s;
-    -moz-transition: all 0.2s;
-    -ms-transition: all 0.2s;
-    -o-transition: all 0.2s;
-    transition: all 0.2s;
 }
