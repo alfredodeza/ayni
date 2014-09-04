@@ -1,5 +1,5 @@
 from pecan.hooks import TransactionHook, RequestViewerHook
-from ayni.hooks.cors import CorsHook()
+from ayni.hooks.cors import CorsHook
 from ayni import models
 
 
@@ -13,7 +13,6 @@ server = {
 app = {
     'root': 'ayni.controllers.root.RootController',
     'modules': ['ayni'],
-    'static_root': '%(confdir)s/public',
     'default_renderer': 'json',
     'hooks': [
         TransactionHook(
@@ -25,7 +24,7 @@ app = {
         ),
         CorsHook(),
     ],
-    'debug': True,
+    'debug': False,
     #'errors': {
     #    404: '/error/404',
     #    '__force_dict__': True
@@ -71,6 +70,11 @@ sqlalchemy = {
     'pool_recycle':  3600,
     'encoding':      'utf-8'
 }
+
+
+ayni_css_file = "http://ayni.ceph.com/public/css/ayni.css"
+
+ayni_fqdn = "http://ayni.ceph.com/"
 
 projects = [
     {
