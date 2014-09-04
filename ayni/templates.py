@@ -56,8 +56,9 @@ js = """
       for (var i = 0; i < data.length; i++) {
         var obj = data[i];
         var end_url = obj['end_url'];
-        if url.indexOf(end_url):
+        if (url.indexOf(end_url) > -1) {
           return obj['name'];
+        };
       };
       return "development"
     }
