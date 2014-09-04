@@ -50,11 +50,23 @@ js = """
       return div;
     };
 
-    function InsertHtml(links){
+    function currentlyReading(data) {
+      var url = window.location.href
+
+      for (var i = 0; i < data.length; i++) {
+        var obj = data[i];
+        var end_url = obj['end_url'];
+        if url.indexOf(end_url):
+          return obj['name'];
+      };
+      return "development"
+    }
+
+    function InsertHtml(links, doc_version){
       var li_links = createLI(links);
       var ul_links = createUL(li_links);
       var version_links = createDiv("ayni-versions", null, [ul_links]);
-      var current_version = '<span>Doc version: stable</span>';
+      var current_version = '<span>Doc version: '+doc_version+'</span>';
       var footer = createDiv("ayni-footer", null, [version_links, current_version]);
       var container = createDiv("ayni-container", null, [footer]);
 
@@ -89,9 +101,10 @@ js = """
                     var name = obj['name'];
                     var link = createA(redirect_to, name);
                     links.push(link);
-                }
+                };
 
-                InsertHtml(links);
+                var doc_version = currentlyReading(data);
+                InsertHtml(links, doc_version);
             }
         };
 
