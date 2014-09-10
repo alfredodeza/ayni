@@ -61,9 +61,7 @@ logging = {
 }
 
 sqlalchemy = {
-    # You may use SQLite for testing
     'url': 'sqlite:///dev.db',
-    # When you set up PostreSQL, it will look more like:
     #'url': 'postgresql+psycopg2://USER:PASSWORD@DB_HOST/DB_NAME',
     'echo':          True,
     'echo_pool':     True,
@@ -133,4 +131,22 @@ projects = [
 
         ]
     },
+]
+
+
+extra_redirect_rules = [
+    ('~^wiki$',                                   'http://ceph.com/docs/'),
+    ('~^wiki/$',                                  'http://ceph.com/docs/'),
+    ('~^wiki/(.*)$',                              'http://ceph.com/docs/'),
+    ('~^/w/(.*)$',                                'http://ceph.com/docs/'),
+    ('~/docs/master/cluster-ops',                 'http:/ceph.com/docs/master/rados/operations'),
+    ('~/docs/master/cluster-ops/',                'http:/ceph.com/docs/master/rados/operations/'),
+    ('~/docs/master/source',                      'http://ceph.com/docs/master/install'),
+    ('~/docs/master/source/',                     'http://ceph.com/docs/master/install/'),
+    ('~/docs/master/source/build-prerequisites/', 'http://ceph.com/docs/master/install/build-prerequisites/'),
+    ('~/docs/master/source/get-tarballs/',        'http://ceph.com/docs/master/install/get-tarballs/'),
+    ('~/docs/master/source/git/',                 'http://ceph.com/docs/master/install/git/'),
+    ('~/docs/master/source/clone-source/',        'http://ceph.com/docs/master/install/clone-source/'),
+    ('~/docs/master/source/building-ceph/',       'http://ceph.com/docs/master/install/building-ceph/'),
+    ('~/docs/master/source/build-packages/',      'http://ceph.com/docs/master/install/build-packages/'),
 ]
