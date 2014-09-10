@@ -21,6 +21,13 @@ def timestamp():
     return datetime.isoformat(datetime.today())
 
 
+def extra_rules(rules):
+    lines = '\n# extra redirect rules\n'
+    for rule in rules:
+        lines += '%s %s;\n' % rule
+    return lines
+
+
 class GenerateMapCommand(BaseCommand):
     """
     Generate the Nginx redirect map from projects
@@ -73,6 +80,7 @@ class GenerateMapCommand(BaseCommand):
 
             with open(conf.get('map_path', 'ayni.map'), 'w') as f:
                 f.write(template)
+                f.write(extra_rules(conf.get('extra_redirect_rules', '')))
 
         except:
             models.rollback()
