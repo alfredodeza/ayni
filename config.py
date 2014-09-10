@@ -83,7 +83,7 @@ projects = [
                 'name': 'latest',
                 'version': 'v0.80.5',
                 'url_prefix': '/docs/',
-                'prefix_regex': '~/docs/(.*)',
+                'prefix_regex': '~/docs/latest$',
                 'weight': 99,
                 'redirect': True,
             },
@@ -135,10 +135,6 @@ projects = [
 
 
 extra_redirect_rules = [
-    ('~/wiki$',                                   'http://ceph.com/docs/'),
-    ('~/wiki/$',                                  'http://ceph.com/docs/'),
-    ('~/wiki/(.*)$',                              'http://ceph.com/docs/'),
-    ('~/w/(.*)$',                                'http://ceph.com/docs/'),
     ('~/docs/master/cluster-ops',                 'http:/ceph.com/docs/master/rados/operations'),
     ('~/docs/master/cluster-ops/',                'http:/ceph.com/docs/master/rados/operations/'),
     ('~/docs/master/source',                      'http://ceph.com/docs/master/install'),
