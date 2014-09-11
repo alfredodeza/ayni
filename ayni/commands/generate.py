@@ -53,7 +53,7 @@ class GenerateMapCommand(BaseCommand):
                 else:
                     p = models.Project(name=project['name'], fqdn=project['fqdn'])
                 template = template + '\n# redirects for %s\n' % p.name
-
+                redirects = []
                 for doc in project.get('docs', []):
                     d = p.get_doc(doc['name'])
                     if d:
@@ -68,7 +68,10 @@ class GenerateMapCommand(BaseCommand):
                         line = "{prefix} {redirect};\n".format(
                             prefix=d.prefix_regex or d.url_prefix, redirect=d.redirect_to
                         )
-                        template = template + line
+                        redirects.append((d.weight, line))
+
+                lines = ''.join([v for k, v in sorted(redirects, reverse=True)])
+                template += lines
 
                 # Create the JS
                 here = os.path.abspath(os.path.dirname(__file__))
