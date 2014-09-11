@@ -45,12 +45,22 @@ class GenerateMapCommand(BaseCommand):
 
             template = map_template.format(timestamp=timestamp())
             for project in conf.projects:
-                p = models.Project.query.filter_by(name=project['name']).first()
-                if not p:
+                p_query = models.Project.query.filter_by(name=project['name'])
+                p = p_query.first()
+                if p:  # lets update
+                    p_kw = dict((k, v) for k, v in project.items() if k != 'docs')
+                    p_query.update(p_kw)
+                else:
                     p = models.Project(name=project['name'], fqdn=project['fqdn'])
                 template = template + '\n# redirects for %s\n' % p.name
+
                 for doc in project.get('docs', []):
                     d = p.get_doc(doc['name'])
+                    if d:
+                        for k, v in doc.items():
+                            if k == 'redirect':
+                                pass
+                            setattr(d, k, v)
                     if not d:
                         d = models.Doc(p, **doc)
 
