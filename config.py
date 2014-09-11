@@ -135,14 +135,14 @@ projects = [
 
 
 extra_redirect_rules = [
-    ('~/docs/master/cluster-ops',                 'http:/ceph.com/docs/master/rados/operations'),
-    ('~/docs/master/cluster-ops/',                'http:/ceph.com/docs/master/rados/operations/'),
-    ('~/docs/master/source',                      'http://ceph.com/docs/master/install'),
-    ('~/docs/master/source/',                     'http://ceph.com/docs/master/install/'),
-    ('~/docs/master/source/build-prerequisites/', 'http://ceph.com/docs/master/install/build-prerequisites/'),
-    ('~/docs/master/source/get-tarballs/',        'http://ceph.com/docs/master/install/get-tarballs/'),
-    ('~/docs/master/source/git/',                 'http://ceph.com/docs/master/install/git/'),
-    ('~/docs/master/source/clone-source/',        'http://ceph.com/docs/master/install/clone-source/'),
-    ('~/docs/master/source/building-ceph/',       'http://ceph.com/docs/master/install/building-ceph/'),
-    ('~/docs/master/source/build-packages/',      'http://ceph.com/docs/master/install/build-packages/'),
+    ('~/docs/master/cluster-ops',                 '/docs/master/rados/operations'),
+    ('~/docs/master/cluster-ops/',                '/docs/master/rados/operations/'),
+    ('~/docs/master/source',                      '/docs/master/install'),
+    ('~/docs/master/source/',                     '/docs/master/install/'),
+    ('~/docs/master/source/build-prerequisites/', '/docs/master/install/build-prerequisites/'),
+    ('~/docs/master/source/get-tarballs/',        '/docs/master/install/get-tarballs/'),
+    ('~/docs/master/source/git/',                 '/docs/master/install/git/'),
+    ('~/docs/master/source/clone-source/',        '/docs/master/install/clone-source/'),
+    ('~/docs/master/source/building-ceph/',       '/docs/master/install/building-ceph/'),
+    ('~/docs/master/source/build-packages/',      '/docs/master/install/build-packages/'),
 ]
