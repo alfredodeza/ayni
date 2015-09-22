@@ -38,7 +38,6 @@ class GenerateMapCommand(BaseCommand):
         super(GenerateMapCommand, self).run(args)
         out("LOADING ENVIRONMENT")
         self.load_app()
-        models.init_model()
         try:
             out("STARTING A TRANSACTION...")
             models.start()
