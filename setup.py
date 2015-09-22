@@ -15,6 +15,7 @@ setup(
     license = "MIT",
     install_requires=[
         "pecan",
+        "sqlalchemy",
     ],
     test_suite='ayni',
     zip_safe=False,
